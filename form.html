@@ -21,11 +21,15 @@
     </label>
     <br><br>
     <button id="checkButton" onclick="updateDealField()">Check</button>
-
+    
     <script>
         async function updateDealField() {
             const offerAccepted = document.getElementById('offerCheckbox').checked;
             const privacyAccepted = document.getElementById('privacyCheckbox').checked;
+
+            // Define values based on checkbox states
+            const offerStatus = offerAccepted ? 'OFERTA ZAAKCEPTOWANA' : 'OFERTA ODRZUCONA';
+            const privacyStatus = privacyAccepted ? 'POLITYKA PRYWATNOSCI ZAAKCEPTOWANA' : 'POLITYKA PRYWATNOSCI ODRZUCONA';
 
             // Pipedrive API details
             const apiToken = '229381bc024af173a6817777aa66da50f42dd7b0'; // Replace with your Pipedrive API token
@@ -33,9 +37,8 @@
             const fieldKey = 'dcc825abecffa7c4bcf34d3779758c9f5aefb386'; // Replace with the field key you want to update
 
             // Define the data to send
-  
             const data = {
-                [fieldKey]: `oferta:${offerAccepted}, polityka prywatnosci: ${privacyAccepted}`
+                [fieldKey]: `oferta: ${offerStatus}, polityka prywatnosci: ${privacyStatus}`
             };
 
             console.log('Data to send:', data);
@@ -64,3 +67,4 @@
     </script>
 </body>
 </html>
+
