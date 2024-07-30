@@ -33,15 +33,9 @@
             const fieldKey = 'dcc825abecffa7c4bcf34d3779758c9f5aefb386'; // Replace with the field key you want to update
 
             // Define the data to send
-            if(offerAccepted){
-                offerAccepted = "zaakceptowano oferte";
-            }else offerAccepted = "odrzucono oferte";
-            if(privacyAccepted){
-                privacyAccepted = "zaakceptowano";
-            }privacyAccepted ="odrzucono";
-                
+  
             const data = {
-                [fieldKey]: `offerta:${offerAccepted}, polityka prywatnosci: ${privacyAccepted}`
+                [fieldKey]: `oferta:${offerAccepted}, polityka prywatnosci: ${privacyAccepted}`
             };
 
             console.log('Data to send:', data);
