@@ -11,7 +11,7 @@
     <br>
 
     <label>
-        <input type="checkbox" id="offerCheckbox">
+        <input type="checkbox" id="oferta">
         <span>Akceptuje warunki oferty</span>
     </label>
     <br>
@@ -24,7 +24,7 @@
 
     <script>
         async function updateDealField() {
-            const offerAccepted = document.getElementById('offerCheckbox').checked;
+            const offerAccepted = document.getElementById('oferta').checked;
             const privacyAccepted = document.getElementById('privacyCheckbox').checked;
 
             // Pipedrive API details
@@ -33,6 +33,12 @@
             const fieldKey = 'dcc825abecffa7c4bcf34d3779758c9f5aefb386'; // Replace with the field key you want to update
 
             // Define the data to send
+            if(offerAccepted === true){
+                offerAccepted = "oferta zaakceptowana";
+            }else offerAccepted = "oferta odrzucona"; 
+            if(privacyAccepted === true){
+                privacyAccepted = "polityka prywatnosci zaakceptowana"; 
+            }else privacyAccepted = "polityka prywatnosci odrzucona";
             const data = {
                 [fieldKey]: `offer_accepted:${offerAccepted}, privacy_accepted:${privacyAccepted}`
             };
