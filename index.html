@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document with Checkboxes</title>
+    <title>Image Display</title>
 </head>
 <body>
-    <h1>Document</h1>
-    <iframe id="documentFrame" width="905" height="1280"></iframe>
+    <h1>Image Display</h1>
+    <img id="dynamicImage" width="905" height="1280" alt="Dynamic Image">
     <br>
 
     <label>
@@ -21,20 +21,22 @@
     </label>
     <br><br>
     <button id="checkButton" onclick="updateDealField()">Check</button>
-
+    
     <script>
         // Function to get URL parameters
         function getUrlParameter(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Get PDF URL and dealId from query parameters
-        const pdfUrl = getUrlParameter('pdf');
+        // Get the 'imageUrl' parameter from the URL
+        const imageUrl = getUrlParameter('imageUrl');
         const dealId = getUrlParameter('dealId');
 
-        // Set the src attribute of the iframe to the PDF URL
-        document.getElementById('documentFrame').src = pdfUrl;
+        // Set the img src dynamically
+        document.getElementById('dynamicImage').src = imageUrl;
 
         // Function to update deal field
         async function updateDealField() {
