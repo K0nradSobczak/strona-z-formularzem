@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Document</h1>
-    <iframe id="documentFrame" width="905" height="1280"></iframe>
+    <iframe id="documentFrame" width="100%" height="600px"></iframe>
     <br>
 
     <label>
@@ -21,63 +21,66 @@
     </label>
     <br><br>
     <button id="checkButton" onclick="updateDealField()">Check</button>
-    
+
     <script>
-        // Function to get URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            const results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
 
-        // Set the PDF URL dynamically based on the URL parameter
-        const pdfUrl = getUrlParameter('pdfUrl');
-        if (pdfUrl) {
-            document.getElementById('documentFrame').src = pdfUrl;
-        } else {
-            document.getElementById('documentFrame').src = 'default.pdf'; // Fallback PDF
-        }
+    // Function to set the PDF URL dynamically
+    function setDocumentUrl() {
+        var docUrl = getUrlParameter('docUrl');
+        var documentFrame = document.getElementById('documentFrame');
+        
+        // Use the passed URL if it exists, otherwise use a default document
+        var documentUrl = docUrl ? docUrl : 'https://example.com/path/to/default-document.pdf';
+        
+        documentFrame.src = documentUrl;
+    }
 
-        // Get dealId from URL
+    setDocumentUrl();
+
+    async function updateDealField() {
+        const offerAccepted = document.getElementById('offerCheckbox').checked;
+        const privacyAccepted = document.getElementById('privacyCheckbox').checked;
+
+        const offerStatus = offerAccepted ? 'OFERTA ZAAKCEPTOWANA' : 'OFERTA ODRZUCONA';
+        const privacyStatus = privacyAccepted ? 'POLITYKA PRYWATNOSCI ZAAKCEPTOWANA' : 'POLITYKA PRYWATNOSCI ODRZUCONA';
+
+        const apiToken = '229381bc024af173a6817777aa66da50f42dd7b0'; // Replace with your Pipedrive API token
         const dealId = getUrlParameter('dealId');
+        const fieldKey = 'dcc825abecffa7c4bcf34d3779758c9f5aefb386'; // Replace with the field key you want to update
 
-        async function updateDealField() {
-            const offerAccepted = document.getElementById('offerCheckbox').checked;
-            const privacyAccepted = document.getElementById('privacyCheckbox').checked;
+        const data = {
+            [fieldKey]: `oferta: ${offerStatus}, polityka prywatnosci: ${privacyStatus}`
+        };
 
-            const offerStatus = offerAccepted ? 'OFERTA ZAAKCEPTOWANA' : 'OFERTA ODRZUCONA';
-            const privacyStatus = privacyAccepted ? 'POLITYKA PRYWATNOSCI ZAAKCEPTOWANA' : 'POLITYKA PRYWATNOSCI ODRZUCONA';
+        console.log('Data to send:', data);
 
-            const apiToken = '229381bc024af173a6817777aa66da50f42dd7b0'; // Replace with your Pipedrive API token
-            const fieldKey = 'dcc825abecffa7c4bcf34d3779758c9f5aefb386'; // Replace with the field key you want to update
+        try {
+            const response = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-            const data = {
-                [fieldKey]: `oferta: ${offerStatus}, polityka prywatnosci: ${privacyStatus}`
-            };
-
-            console.log('Data to send:', data);
-
-            try {
-                const response = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    console.log('Deal field updated successfully:', await response.json());
-                    window.location.href = 'https://www.orange.pl'; // Redirect to thank you page
-                } else {
-                    const error = await response.json();
-                    console.error('Failed to update deal field:', response.status, error);
-                }
-            } catch (error) {
-                console.error('Error updating deal field:', error);
+            if (response.ok) {
+                console.log('Deal field updated successfully:', await response.json());
+                window.location.href = 'https://www.orange.pl'; // Redirect to thank you page
+            } else {
+                const error = await response.json();
+                console.error('Failed to update deal field:', response.status, error);
             }
+        } catch (error) {
+            console.error('Error updating deal field:', error);
         }
+    }
     </script>
 </body>
 </html>
