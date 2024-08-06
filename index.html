@@ -20,16 +20,16 @@
 
         .container {
             background-color: #fff;
-            padding: 30px;
+            padding: 30px; /* Increase padding for more space */
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
+            max-width: 900px; /* Increase max width */
             width: 100%;
         }
 
         h1 {
             color: #333;
-            font-size: 28px;
+            font-size: 28px; /* Slightly increase font size */
             margin-bottom: 20px;
         }
 
@@ -40,11 +40,10 @@
         }
 
         .image-container img {
-            max-width: 100%;
-            max-height: 600px; /* Set max height for the image */
-            height: auto;
+            max-width: 100%; /* Ensures the image does not exceed the container width */
+            height: auto; /* Maintains aspect ratio */
             border-radius: 8px;
-            object-fit: contain;
+            object-fit: contain; /* Ensures the image is fully visible, maintaining aspect ratio */
         }
 
         .checkbox-container,
@@ -56,7 +55,7 @@
         .radio-container label {
             display: block;
             margin-bottom: 10px;
-            font-size: 18px;
+            font-size: 18px; /* Increase font size for checkboxes */
             color: #555;
         }
 
@@ -73,11 +72,11 @@
             background-color: #ff7900;
             color: #fff;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 24px; /* Increase button size */
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-size: 18px;
+            font-size: 18px; /* Increase font size */
         }
 
         .button-container button:hover {
@@ -88,17 +87,17 @@
 
 <body>
     <div class="container">
-        <h1>Warunki umowy</h1>
+        <h1>Warunki oferty</h1>
         <div class="image-container">
             <img id="dynamicImage" alt="Dynamic Image">
         </div>
         <div class="checkbox-container">
             <label>
-                <input type="checkbox" id="offerCheckbox">
+                <input type="checkbox" id="offerCheckbox" required>
                 <span>Akceptuje warunki oferty</span>
             </label>
             <label>
-                <input type="checkbox" id="privacyCheckbox">
+                <input type="checkbox" id="privacyCheckbox" required>
                 <span>Akceptuje polityke prywatności</span>
             </label>
         </div>
