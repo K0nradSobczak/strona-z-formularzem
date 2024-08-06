@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Display</title>
+    <title>Warunki umowy</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,6 +31,17 @@
             color: #333;
             font-size: 24px;
             margin-bottom: 20px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
         }
 
         .checkbox-container,
@@ -69,43 +80,15 @@
         .button-container button:hover {
             background-color: #e86900;
         }
-
-        .save-button {
-            background-color: #ff7900;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .save-button:hover {
-            background-color: #e86900;
-        }
-
-        .description {
-            font-size: 14px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .description a {
-            color: #0056b3;
-            text-decoration: none;
-        }
-
-        .description a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Warunki umowy</h1>
-        <img id="dynamicImage" width="905" height="1280" alt="Dynamic Image">
+        <div class="image-container">
+            <img id="dynamicImage" alt="Dynamic Image">
+        </div>
         <div class="checkbox-container">
             <label>
                 <input type="checkbox" id="offerCheckbox">
