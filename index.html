@@ -18,42 +18,41 @@
             height: 100vh;
         }
 
-        h1 {
-            color: #333;
-        }
-
         .container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            max-width: 500px;
+            width: 100%;
         }
 
-        .container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+        h1 {
+            color: #333;
+            font-size: 24px;
             margin-bottom: 20px;
         }
 
-        .checkbox-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+        .checkbox-container,
+        .radio-container {
             margin-bottom: 20px;
         }
 
-        .checkbox-container label {
+        .checkbox-container label,
+        .radio-container label {
+            display: block;
             margin-bottom: 10px;
+            font-size: 16px;
+            color: #555;
         }
 
-        .checkbox-container input {
+        .checkbox-container input[type="checkbox"],
+        .radio-container input[type="radio"] {
             margin-right: 10px;
         }
 
         .button-container {
-            text-align: center;
+            text-align: right;
         }
 
         .button-container button {
@@ -64,17 +63,48 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 16px;
         }
 
         .button-container button:hover {
             background-color: #e86900;
+        }
+
+        .save-button {
+            background-color: #ff7900;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .save-button:hover {
+            background-color: #e86900;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .description a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        .description a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Image Display</h1>
+        <h1>Warunki umowy</h1>
         <img id="dynamicImage" width="905" height="1280" alt="Dynamic Image">
         <div class="checkbox-container">
             <label>
@@ -87,7 +117,7 @@
             </label>
         </div>
         <div class="button-container">
-            <button id="checkButton" onclick="updateDealField()">Check</button>
+            <button class="save-button" id="checkButton" onclick="updateDealField()">Zaakceptuj</button>
         </div>
     </div>
 
