@@ -65,6 +65,7 @@
         .carousel-buttons {
             display: flex;
             justify-content: space-between;
+            align-items: center; /* Align items vertically */
             margin-top: 10px;
             margin-bottom: 30px; /* Increase margin between buttons and checkboxes */
         }
@@ -84,6 +85,12 @@
             background-color: #e86900;
         }
 
+        .slide-number {
+            font-size: 16px;
+            color: #555;
+            margin-right: 10px; /* Space between the slide number and the button */
+        }
+
         .checkbox-container {
             display: flex;
             flex-direction: column;
@@ -101,7 +108,7 @@
         }
 
         .button-container {
-            text-align: center; /* Center the button horizontally */
+            text-align: right; /* Align the button to the right */
         }
 
         .button-container button {
@@ -133,6 +140,7 @@
             <img id="dynamicImage" alt="Dynamic Image">
         </div>
         <div class="carousel-buttons">
+            <div class="slide-number" id="slideNumber">1 / 2</div> <!-- Slide number display -->
             <button id="prevButton">Previous</button>
             <button id="nextButton">Next</button>
         </div>
@@ -170,6 +178,7 @@
         // Function to update the image src dynamically
         function updateImage() {
             document.getElementById('dynamicImage').src = imageUrls[currentIndex];
+            document.getElementById('slideNumber').textContent = `${currentIndex + 1} / ${imageUrls.length}`;
         }
 
         // Initial call to set the first image
