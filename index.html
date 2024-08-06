@@ -36,12 +36,15 @@
         .image-container {
             text-align: center;
             margin-bottom: 20px;
+            max-width: 100%; /* Ensure the container does not exceed the parent width */
         }
 
         .image-container img {
-            max-width: 100%;
-            height: auto;
+            max-width: 100%;  /* Ensures the image does not exceed the container width */
+            max-height: 300px; /* Limits the height of the image */
+            height: auto;      /* Maintains aspect ratio */
             border-radius: 8px;
+            object-fit: contain; /* Ensures the image is fully visible, maintaining aspect ratio */
         }
 
         .checkbox-container,
