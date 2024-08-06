@@ -98,7 +98,8 @@
             </label>
             <label>
                 <input type="checkbox" id="privacyCheckbox" required>
-                <span>Akceptuje polityke prywatności</span>
+                <span>Akceptuje polityke </span>
+                <a href="https://www.nieruchomosci.orange.pl/pl/polityka-prywatnosci">prywatności</a>
             </label>
         </div>
         <div class="button-container">
@@ -126,6 +127,11 @@
         async function updateDealField() {
             const offerAccepted = document.getElementById('offerCheckbox').checked;
             const privacyAccepted = document.getElementById('privacyCheckbox').checked;
+
+            if (!offerAccepted || !privacyAccepted) {
+                alert('Please accept the terms and privacy policy.');
+                return; // Stop the function if the checkboxes are not checked
+            }
 
             const offerStatus = offerAccepted ? 'OFERTA ZAAKCEPTOWANA' : 'OFERTA ODRZUCONA';
             const privacyStatus = privacyAccepted ? 'POLITYKA PRYWATNOSCI ZAAKCEPTOWANA' : 'POLITYKA PRYWATNOSCI ODRZUCONA';
