@@ -1,27 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Display</title>
-</head>
-<body>
-    <h1>Image Display</h1>
-    <img id="dynamicImage" width="905" height="1280" alt="Dynamic Image">
-    <br>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-    <label>
-        <input type="checkbox" id="offerCheckbox">
-        <span>Akceptuje warunki oferty</span>
-    </label>
-    <br>
-    <label>
-        <input type="checkbox" id="privacyCheckbox">
-        <span>Akceptuje polityke prywatności</span>
-    </label>
-    <br><br>
-    <button id="checkButton" onclick="updateDealField()">Check</button>
-    
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container label {
+            margin-bottom: 10px;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-container button {
+            background-color: #ff7900;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #e86900;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Display</h1>
+        <img id="dynamicImage" width="905" height="1280" alt="Dynamic Image">
+        <div class="checkbox-container">
+            <label>
+                <input type="checkbox" id="offerCheckbox">
+                <span>Akceptuje warunki oferty</span>
+            </label>
+            <label>
+                <input type="checkbox" id="privacyCheckbox">
+                <span>Akceptuje polityke prywatności</span>
+            </label>
+        </div>
+        <div class="button-container">
+            <button id="checkButton" onclick="updateDealField()">Check</button>
+        </div>
+    </div>
+
     <script>
         // Function to get URL parameters
         function getUrlParameter(name) {
@@ -77,4 +146,5 @@
         }
     </script>
 </body>
+
 </html>
