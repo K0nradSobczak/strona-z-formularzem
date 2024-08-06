@@ -10,73 +10,116 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
+            padding: 20px; /* Added padding to prevent content from touching screen edges */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Align content to the top */
             height: 100vh;
+            overflow: hidden; /* Prevent body from scrolling */
+        }
+
+        .title-container {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .title-container h1 {
+            font-size: 32px;
+            color: #333;
+            margin: 0;
         }
 
         .container {
             background-color: #fff;
-            padding: 30px; /* Increase padding for more space */
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 900px; /* Increase max width */
+            max-width: 800px;
             width: 100%;
+            max-height: calc(100vh - 120px); /* Ensure the container fits within the viewport */
+            overflow-y: auto; /* Allow vertical scrolling if content overflows */
         }
 
         h1 {
             color: #333;
-            font-size: 28px; /* Slightly increase font size */
-            margin-bottom: 20px;
-        }
-
-        .image-container {
+            font-size: 28px;
+            margin-bottom: 30px;
             text-align: center;
-            margin-bottom: 20px;
+        }
+
+        .carousel-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .carousel-container img {
             max-width: 100%;
-        }
-
-        .image-container img {
-            max-width: 100%; /* Ensures the image does not exceed the container width */
-            height: auto; /* Maintains aspect ratio */
+            height: auto;
             border-radius: 8px;
-            object-fit: contain; /* Ensures the image is fully visible, maintaining aspect ratio */
+            object-fit: contain;
         }
 
-        .checkbox-container,
-        .radio-container {
-            margin-bottom: 20px;
+        .carousel-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Align items vertically */
+            margin-top: 10px;
+            margin-bottom: 30px; /* Increase margin between buttons and checkboxes */
         }
 
-        .checkbox-container label,
-        .radio-container label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px; /* Increase font size for checkboxes */
+        .carousel-buttons button {
+            padding: 12px 24px;
+            background-color: #ff7900;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .carousel-buttons button:hover {
+            background-color: #e86900;
+        }
+
+        .slide-number {
+            font-size: 16px;
+            color: #555;
+            margin-right: 10px; /* Space between the slide number and the button */
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Space between checkboxes */
+            margin-bottom: 30px; /* Increase space below checkboxes */
+        }
+
+        .checkbox-container label {
+            font-size: 18px;
             color: #555;
         }
 
-        .checkbox-container input[type="checkbox"],
-        .radio-container input[type="radio"] {
+        .checkbox-container input[type="checkbox"] {
             margin-right: 10px;
         }
 
         .button-container {
-            text-align: right;
+            text-align: right; /* Align the button to the right */
         }
 
         .button-container button {
             background-color: #ff7900;
             color: #fff;
             border: none;
-            padding: 12px 24px; /* Increase button size */
+            padding: 14px 28px; /* Increase button size */
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-size: 18px; /* Increase font size */
+            font-size: 20px; /* Increase font size */
         }
 
         .button-container button:hover {
@@ -86,19 +129,30 @@
 </head>
 
 <body>
+    <!-- Title Section -->
+    <div class="title-container">
+        <h1>Warunki Umowy - Dokument Tytułowy</h1>
+    </div>
+
     <div class="container">
-        <h1>Warunki umowy</h1>
-        <div class="image-container">
+        <h1>Warunki oferty</h1>
+        <div class="carousel-container">
             <img id="dynamicImage" alt="Dynamic Image">
+        </div>
+        <div class="carousel-buttons">
+            <div class="slide-number" id="slideNumber">1 / 2</div> <!-- Slide number display -->
+            <button id="prevButton">Poprzednia</button>
+            <button id="nextButton">Następna</button>
         </div>
         <div class="checkbox-container">
             <label>
-                <input type="checkbox" id="offerCheckbox">
+                <input type="checkbox" id="offerCheckbox" required>
                 <span>Akceptuje warunki oferty</span>
             </label>
             <label>
-                <input type="checkbox" id="privacyCheckbox">
-                <span>Akceptuje polityke prywatności</span>
+                <input type="checkbox" id="privacyCheckbox" required>
+                <span>Akceptuje politykę </span>
+                <a href="https://www.nieruchomosci.orange.pl/pl/polityka-prywatnosci">prywatności</a>
             </label>
         </div>
         <div class="button-container">
@@ -115,17 +169,45 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Get the 'imageUrl' parameter from the URL
-        const imageUrl = getUrlParameter('imageUrl');
-        const dealId = getUrlParameter('dealId');
+        // Get the 'imageUrls' parameter from the URL and split it into an array
+        const imageUrls = getUrlParameter('imageUrls').split(',');
 
-        // Set the img src dynamically
-        document.getElementById('dynamicImage').src = imageUrl;
+        // Set up initial image index
+        let currentIndex = 0;
+
+        // Function to update the image src dynamically
+        function updateImage() {
+            document.getElementById('dynamicImage').src = imageUrls[currentIndex];
+            document.getElementById('slideNumber').textContent = `${currentIndex + 1} / ${imageUrls.length}`;
+        }
+
+        // Initial call to set the first image
+        updateImage();
+
+        // Add event listeners for carousel buttons
+        document.getElementById('prevButton').addEventListener('click', function () {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateImage();
+            }
+        });
+
+        document.getElementById('nextButton').addEventListener('click', function () {
+            if (currentIndex < imageUrls.length - 1) {
+                currentIndex++;
+                updateImage();
+            }
+        });
 
         // Function to update deal field
         async function updateDealField() {
             const offerAccepted = document.getElementById('offerCheckbox').checked;
             const privacyAccepted = document.getElementById('privacyCheckbox').checked;
+
+            if (!offerAccepted || !privacyAccepted) {
+                alert('Please accept the terms and privacy policy.');
+                return; // Stop the function if the checkboxes are not checked
+            }
 
             const offerStatus = offerAccepted ? 'OFERTA ZAAKCEPTOWANA' : 'OFERTA ODRZUCONA';
             const privacyStatus = privacyAccepted ? 'POLITYKA PRYWATNOSCI ZAAKCEPTOWANA' : 'POLITYKA PRYWATNOSCI ODRZUCONA';
