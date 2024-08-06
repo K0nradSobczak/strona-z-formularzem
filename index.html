@@ -33,17 +33,24 @@
             margin-bottom: 20px;
         }
 
-        .image-container {
+        .carousel-container {
             text-align: center;
             margin-bottom: 20px;
+            position: relative;
             max-width: 100%;
         }
 
-        .image-container img {
+        .carousel-container img {
             max-width: 100%; /* Ensures the image does not exceed the container width */
             height: auto; /* Maintains aspect ratio */
             border-radius: 8px;
             object-fit: contain; /* Ensures the image is fully visible, maintaining aspect ratio */
+        }
+
+        .carousel-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
         }
 
         .checkbox-container,
@@ -88,8 +95,12 @@
 <body>
     <div class="container">
         <h1>Warunki oferty</h1>
-        <div class="image-container">
+        <div class="carousel-container">
             <img id="dynamicImage" alt="Dynamic Image">
+        </div>
+        <div class="carousel-buttons">
+            <button id="prevButton">Previous</button>
+            <button id="nextButton">Next</button>
         </div>
         <div class="checkbox-container">
             <label>
@@ -116,12 +127,34 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Get the 'imageUrl' parameter from the URL
-        const imageUrl = getUrlParameter('imageUrl');
-        const dealId = getUrlParameter('dealId');
+        // Get the 'imageUrls' parameter from the URL and split it into an array
+        const imageUrls = getUrlParameter('imageUrls').split(',');
 
-        // Set the img src dynamically
-        document.getElementById('dynamicImage').src = imageUrl;
+        // Set up initial image index
+        let currentIndex = 0;
+
+        // Function to update the image src dynamically
+        function updateImage() {
+            document.getElementById('dynamicImage').src = imageUrls[currentIndex];
+        }
+
+        // Initial call to set the first image
+        updateImage();
+
+        // Add event listeners for carousel buttons
+        document.getElementById('prevButton').addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateImage();
+            }
+        });
+
+        document.getElementById('nextButton').addEventListener('click', function() {
+            if (currentIndex < imageUrls.length - 1) {
+                currentIndex++;
+                updateImage();
+            }
+        });
 
         // Function to update deal field
         async function updateDealField() {
